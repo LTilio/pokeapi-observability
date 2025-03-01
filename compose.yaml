@@ -1,0 +1,29 @@
+services:
+  app:
+    build: .
+    container_name: PokeApi_observability
+    ports:
+      - "8001:8001"
+    depends_on:
+      - database
+    networks:
+      - sentinel
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://pokeob:pokeob@database:5433/pokeob
+
+  database:
+    image: postgres
+    container_name: PokeApi_observability_db
+    restart: always
+    ports:
+      - "5433:5433"
+    environment:
+      POSTGRES_USER: pokeob
+      POSTGRES_PASSWORD: pokeob
+      POSTGRES_DB: pokeob
+    networks:
+      - sentinel
+
+networks:
+  sentinel:
+    external: true
