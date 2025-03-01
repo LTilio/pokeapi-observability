@@ -20,13 +20,15 @@ Antes de iniciar, certifique-se de ter os seguintes softwares instalados:
 ```sh
 cd pokeapi-observability
 ```
+### 2️⃣ Criar o arquivo .env
+Antes de rodar o projeto, crie um arquivo .env na raiz do projeto usando o .env.EXAMPLE como base
 
-### 2️⃣ Criar a rede Docker (se ainda não existir)
+### 3️⃣ Criar a rede Docker (se ainda não existir)
 ```sh
 docker network create sentinel
 ```
 
-### 3️⃣ Construir e subir os containers
+### 4️⃣ Construir e subir os containers
 ```sh
 docker compose up --build -d
 ```
@@ -35,22 +37,22 @@ Isso irá:
 - Criar o container da aplicação FastAPI
 - Configurar a instrumentação com OpenTelemetry
 
-### 4️⃣ Acessar a API
+### 5️⃣ Acessar a API
 A API estará rodando em `http://localhost:8001`
 
-### 5️⃣ Documentação Interativa (Swagger UI)
+### 6️⃣ Documentação Interativa (Swagger UI)
 A documentação interativa do FastAPI pode ser acessada em:
 ```sh
 http://localhost:8001/docs
 ```
 
-### 6️⃣ Para visualizar os logs
+### 7️⃣ Para visualizar os logs
 Caso precise visualizar os logs da aplicação, utilize:
 ```sh
 docker logs -f PokeApi_observability
 ```
 
-### 7️⃣ Para parar os containers
+### 8️⃣ Para parar os containers
 Se precisar parar a aplicação, execute:
 ```sh
 docker compose down
