@@ -7,14 +7,15 @@ WORKDIR /app
 # Copia os arquivos de configuração do Poetry
 COPY pyproject.toml poetry.lock* ./
 
-# Instala o Poetry
-RUN pip install poetry
+# Instala o Poetry e configura para não usar ambiente virtual
+RUN pip install poetry && \
+    poetry config virtualenvs.create false
 
 # Instala todas as dependências, incluindo as de desenvolvimento
-RUN poetry install --no-root 
+RUN poetry install --with dev --no-root
 
-# Instala a instrumentação do OpenTelemetry
-RUN poetry run poe otel-install
+# Instala as dependências do OpenTelemetry
+RUN opentelemetry-bootstrap -a install
 
 # Copia o restante do código da aplicação
 COPY . .
@@ -22,8 +23,5 @@ COPY . .
 # Expõe a porta usada pela aplicação
 EXPOSE 8001
 
-# Define o ambiente carregando variáveis do `.env`
-ENV $(cat .env | xargs)
-
-# Comando para rodar a API com OpenTelemetry
-CMD ["poetry", "run", "poe", "serve"]
+# Comando para rodar a aplicação instrumentada com OpenTelemetry
+CMD ["opentelemetry-instrument", "uvicorn", "app.app:app", "--host", "0.0.0.0", "--port", "8001"]

@@ -8,8 +8,7 @@ services:
       - database
     networks:
       - sentinel
-    environment:
-      - DATABASE_URL=postgresql+asyncpg://pokeob:pokeob@database:5433/pokeob
+    env_file: .env
 
   database:
     image: postgres
@@ -21,6 +20,7 @@ services:
       POSTGRES_USER: pokeob
       POSTGRES_PASSWORD: pokeob
       POSTGRES_DB: pokeob
+    command: postgres -c "port=5433" # Força o PostgreSQL a usar a porta 5433
     networks:
       - sentinel
 

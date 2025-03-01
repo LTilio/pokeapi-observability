@@ -11,7 +11,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 logger.addHandler(logging.StreamHandler())
 
-DATABASE_URL = "postgresql+asyncpg://pokeob:pokeob@localhost:5433/pokeob"
+DATABASE_URL = "postgresql+asyncpg://pokeob:pokeob@database:5433/pokeob"
 POKEAPI_URL = "https://pokeapi.co/api/v2/pokemon/"
 
 reg = registry()
